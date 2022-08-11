@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:13.4-buster
+    restart: always
+    container_name: notes-api-db
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=notes
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+        context: .
+        dockerfile: Dockerfile
+        network: host
+    pull_policy: always
+    restart: "no"
+    container_name: notes-api
+    command: bash -c "sleep 5 && flask db upgrade && flask run -h 0.0.0.0 -p 5000"
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@db:5432/notes
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  test:
+    build:
+        context: .
+        dockerfile: Dockerfile
+        network: host
+    pull_policy: always
+    restart: "no"
+    container_name: notes-api-test
+    command: bash -c "sleep 5 && pytest tests -m \"mockdata\" && tail -F anything"
+    environment:
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@db:5432/notes
+      - NOTES_API_SERVER=http://notes-api:5000
+    depends_on:
+      - api

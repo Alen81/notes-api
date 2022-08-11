@@ -1,0 +1,572 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/signup"
+                        }
+                    }
+                },
+                "operationId": "post_signup_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/signup_post"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/auth/verify": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "post_verify_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/verify_post"
+                        }
+                    }
+                ],
+                "tags": [
+                    "auth"
+                ]
+            }
+        },
+        "/folder": {
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/folder"
+                        }
+                    }
+                },
+                "operationId": "post_folder_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/folder_post"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "folder"
+                ]
+            },
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/folder"
+                            }
+                        }
+                    }
+                },
+                "operationId": "get_folder_view",
+                "parameters": [
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "folder"
+                ]
+            }
+        },
+        "/folder/{folder_id}/note": {
+            "parameters": [
+                {
+                    "name": "folder_id",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "post": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/note"
+                        }
+                    }
+                },
+                "operationId": "post_folder_note_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/note_post"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "note"
+                ]
+            }
+        },
+        "/folder/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "delete_folder_id_view",
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "folder"
+                ]
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/folder"
+                        }
+                    }
+                },
+                "operationId": "put_folder_id_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/folder_post"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "folder"
+                ]
+            }
+        },
+        "/note": {
+            "get": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/note_paging"
+                        }
+                    }
+                },
+                "operationId": "get_note_view",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "in": "query",
+                        "description": "Show specific number of items per page.",
+                        "name": "perpage"
+                    },
+                    {
+                        "type": "integer",
+                        "in": "query",
+                        "description": "Show specific page.",
+                        "name": "page"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "Turn on descending order.",
+                        "name": "sortdesc"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "Sort by possible options [shared, heading]",
+                        "name": "sort"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "Search for text in notes.",
+                        "name": "notetext"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "Public or private visibility [true, false]\n        When not specified user can see all of his notes, either private\n        or public.",
+                        "name": "ispublic"
+                    },
+                    {
+                        "type": "integer",
+                        "in": "query",
+                        "description": "Filter by specific folder.",
+                        "name": "folderid"
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "note"
+                ]
+            }
+        },
+        "/note/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "integer"
+                }
+            ],
+            "delete": {
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    }
+                },
+                "operationId": "delete_note_id_view",
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "note"
+                ]
+            },
+            "put": {
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/note"
+                        }
+                    }
+                },
+                "operationId": "put_note_id_view",
+                "parameters": [
+                    {
+                        "name": "payload",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/note"
+                        }
+                    },
+                    {
+                        "name": "X-Fields",
+                        "in": "header",
+                        "type": "string",
+                        "format": "mask",
+                        "description": "An optional fields mask"
+                    }
+                ],
+                "security": [
+                    {
+                        "basic_auth": []
+                    }
+                ],
+                "tags": [
+                    "note"
+                ]
+            }
+        }
+    },
+    "info": {
+        "title": "Notes API",
+        "version": "1.0",
+        "description": "Manage your notes in a simple way."
+    },
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "securityDefinitions": {
+        "basic_auth": {
+            "type": "basic",
+            "in": "header",
+            "name": "x-access-token"
+        }
+    },
+    "security": [
+        {
+            "basic": []
+        }
+    ],
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Authentication."
+        },
+        {
+            "name": "folder",
+            "description": "Folder for notes."
+        },
+        {
+            "name": "note",
+            "description": "Manage your notes."
+        }
+    ],
+    "definitions": {
+        "signup_post": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "signup": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "verify_post": {
+            "properties": {
+                "username": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "folder_post": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "folder": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "note_paging": {
+            "properties": {
+                "has_next": {
+                    "type": "boolean"
+                },
+                "has_prev": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/note"
+                    }
+                },
+                "next_num": {
+                    "type": "integer"
+                },
+                "pages": {
+                    "type": "integer"
+                },
+                "per_page": {
+                    "type": "integer"
+                },
+                "prev_num": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "note": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "folder_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/note_item"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "note_item": {
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "text_body": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "note_post": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "folder_id": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "is_public": {
+                    "type": "boolean"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/note_item_post"
+                    }
+                }
+            },
+            "type": "object"
+        },
+        "note_item_post": {
+            "properties": {
+                "text_body": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "responses": {
+        "ParseError": {
+            "description": "When a mask can't be parsed"
+        },
+        "MaskError": {
+            "description": "When any error occurs on mask"
+        }
+    }
+}
